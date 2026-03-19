@@ -14,10 +14,16 @@ const createTables = async () => {
         name VARCHAR(120) NOT NULL,
         email VARCHAR(180) UNIQUE NOT NULL,
         password_hash TEXT NOT NULL,
+        refresh_token TEXT,
         role VARCHAR(20),
         is_active BOOLEAN DEFAULT TRUE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+    `);
+
+    await pool.query(`
+      ALTER TABLE users
+      ADD COLUMN IF NOT EXISTS refresh_token TEXT;
     `);
 
     /* CANDIDATES */

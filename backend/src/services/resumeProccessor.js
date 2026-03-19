@@ -152,10 +152,10 @@ Feb 2025 – Now → 1 year
 
         // 4. Update candidate
         await conn.query(
-            `UPDATE candidates
-       SET total_experience_years = $1,
+           `UPDATE candidates
+           SET total_experience_years = $1,
            profile_summary = $2
-       WHERE id = $3`,
+           WHERE id = $3`,
             [
                 data.experience_years || null,
                 data.summary || null,
@@ -167,12 +167,12 @@ Feb 2025 – Now → 1 year
 
         // 5. Prepare embedding text
         const embeddingText = `
-skills: ${(data.skills || []).join(", ")}
-roles: ${(data.roles || []).join(", ")}
-experience: ${data.experience_years || 0}
-industry: ${data.industry || ""}
-summary: ${data.summary || ""}
-`;
+            skills: ${(data.skills || []).join(", ")}
+            roles: ${(data.roles || []).join(", ")}
+            experience: ${data.experience_years || 0}
+            industry: ${data.industry || ""}
+            summary: ${data.summary || ""}
+            `;
 
         // 6. Generate embedding
         console.log("🧠 Generating embedding...");
