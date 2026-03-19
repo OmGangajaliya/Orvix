@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAlert } from './context/AlertContext'
 import API from './api/axios.js'
 import './style/auth.css'
@@ -25,20 +25,20 @@ const cadidateAuth = () => {
 
     const loginSubmitHandler = async (e) => {
         e.preventDefault()
-        try {
-            const response = await API.post('/candidate/login', {
-                candidateLoginEmail,
-                password,
-            });
+        // try {
+        //     const response = await API.post('/candidate/login', {
+        //         candidateLoginEmail,
+        //         password,
+        //     });
 
-            if (response.data.success) {
-                navigate('/candidate/dashboard', {
-                    state: { loginSuccess: true }
-                });
-            }
-        } catch (err) {
-            errorMsg("Invalid credentials or store not found.")
-        }
+        //     if (response.data.success) {
+        //         navigate('/candidate/dashboard', {
+        //             state: { loginSuccess: true }
+        //         });
+        //     }
+        // } catch (err) {
+        //     errorMsg("Invalid credentials or store not found.")
+        // }
     }
     return (
         <div className="auth-wrapper">
@@ -80,7 +80,7 @@ const cadidateAuth = () => {
                             </div>
                             <button type='submit' className='login-btn'>Login</button>
                             <p className='alt-login-text'>
-                                Dont have an account ? <button to='/storeLogin'>Register here</button>
+                                Dont have an account ? <Link to="/candidate/register">Register here</Link>
                             </p>
                         </form>
                     </div>

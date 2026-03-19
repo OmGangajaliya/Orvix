@@ -25,20 +25,21 @@ const companyAuth = () => {
 
     const loginSubmitHandler = async (e) => {
         e.preventDefault()
-        try {
-            const response = await API.post('/company/login', {
-                companyLoginEmail,
-                password,
-            });
+        errorMsg('Submit Clicked');
+        // try {
+        //     const response = await API.post('/company/login', {
+        //         companyLoginEmail,
+        //         password,
+        //     });
 
-            if (response.data.success) {
-                navigate('/company/dashboard', {
-                    state: { loginSuccess: true }
-                });
-            }
-        } catch (err) {
-            errorMsg("Invalid credentials or store not found.")
-        }
+        //     if (response.data.success) {
+        //         navigate('/company/dashboard', {
+        //             state: { loginSuccess: true }
+        //         });
+        //     }
+        // } catch (err) {
+        //     errorMsg("Invalid credentials or store not found.")
+        // }
     }
     return (
         <div className="auth-wrapper">
