@@ -15,8 +15,10 @@ function safeJSONParse(text) {
     }
 }
 
-// ✅ Gemini embedding dimension = 768
-const DEFAULT_EMBEDDING_DIMENSION = 768;
+// Keep embedding dimension aligned with pgvector column dimension.
+const DEFAULT_EMBEDDING_DIMENSION = Number(
+    process.env.CANDIDATE_EMBEDDING_DIMENSION || 768
+);
 
 // ✅ Ensure numeric array
 function toNumericEmbeddingArray(embedding) {
@@ -35,8 +37,8 @@ function toNumericEmbeddingArray(embedding) {
     });
 
     if (normalized.length !== DEFAULT_EMBEDDING_DIMENSION) {
-        console.warn(
-            `⚠️ Expected ${DEFAULT_EMBEDDING_DIMENSION}, got ${normalized.length}`
+        throw new Error(
+            `Embedding dimension mismatch: expected ${DEFAULT_EMBEDDING_DIMENSION}, got ${normalized.length}`
         );
     }
 
@@ -180,6 +182,7 @@ summary: ${data.summary || ""}
         });
 
         const embeddingRes = await embedModel.embedContent({
+            outputDimensionality: DEFAULT_EMBEDDING_DIMENSION,
             content: {
                 parts: [{ text: embeddingText }]
             }

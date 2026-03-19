@@ -180,11 +180,11 @@ const createTables = async () => {
 
     /* CANDIDATE EMBEDDINGS */
     await pool.query(`
-      CREATE TABLE candidate_embeddings (
-  id SERIAL PRIMARY KEY,
-  candidate_id INT UNIQUE REFERENCES candidates(id) ON DELETE CASCADE,
-  embedding vector(3072)
-);
+      CREATE TABLE IF NOT EXISTS candidate_embeddings (
+        id SERIAL PRIMARY KEY,
+        candidate_id INT UNIQUE REFERENCES candidates(id) ON DELETE CASCADE,
+        embedding VECTOR(768)
+      );
     `);
 
     /* JOB EMBEDDINGS */
