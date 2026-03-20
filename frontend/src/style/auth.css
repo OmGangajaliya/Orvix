@@ -194,3 +194,107 @@
         width: 170px;
     }
 }
+
+/* Two-step registration styles */
+.registration-step-info {
+    background: linear-gradient(135deg, rgba(11, 97, 200, 0.08), rgba(43, 143, 240, 0.08));
+    border: 1px solid rgba(75, 130, 190, 0.3);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.registration-step-info p {
+    margin: 0;
+    color: #226fca;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+}
+
+.registration-step-info p:first-child {
+    color: #0c61c8;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.user-email {
+    color: #1f67bd !important;
+    font-weight: 600 !important;
+    padding: 0.4rem 0;
+}
+
+.input-group input[type="file"] {
+    padding: 0.8rem !important;
+    cursor: pointer;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(189, 231, 255, 0.4)) !important;
+}
+
+.input-group input[type="file"]::file-selector-button {
+    background: linear-gradient(180deg, #2b8ff0, #0c61c8);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 0.8rem;
+    font-size: 0.9rem;
+    transition: filter 0.2s ease;
+}
+
+.input-group input[type="file"]::file-selector-button:hover {
+    filter: brightness(1.1);
+}
+
+.file-selected {
+    color: #10a827;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Onboarding Page Styles */
+.onboarding-welcome {
+    background: linear-gradient(135deg, rgba(11, 97, 200, 0.08), rgba(43, 143, 240, 0.08));
+    border: 1px solid rgba(75, 130, 190, 0.3);
+    border-radius: 0.75rem;
+    padding: 1.2rem;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+
+.welcome-text {
+    color: #0c61c8;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 0.3px;
+}
+
+.welcome-subtext {
+    color: #226fca;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: 0.2px;
+}
+
+.form-grid {
+    width: 100%;
+    display: grid;
+    gap: 1rem;
+}
+
+.onboarding-skip {
+    width: 100%;
+    margin-top: 1rem;
+    text-align: center;
+    color: rgba(41, 100, 161, 0.88);
+    font-size: 0.9rem;
+    letter-spacing: 0.2px;
+}

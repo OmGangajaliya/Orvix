@@ -5,6 +5,7 @@ import {
   updateJobService,
   deleteJobService
 } from "../services/job.service.js";
+import { processJob } from "../services/jobProcessor.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
@@ -16,6 +17,15 @@ const createJob = async (req, res, next) => {
     }
 
     const job = await createJobService(req.user.id, req.body);
+
+    processJob(job.id, {
+      role: req.body.role,
+      description: req.body.description,
+      experience: req.body.experience_required,
+      skills: req.body.skills || req.body.skill_ids,
+      industry: req.body.industry
+    }).catch((err) => console.error("Background job processing error:", err));
+
     res.status(201).json(new ApiResponse(201, job, "Job created"));
   } catch (err) {
     next(new ApiError(400, err.message || "Failed to create job"));
@@ -45,6 +55,15 @@ const updateJob = async (req, res, next) => {
   try {
     const updated = await updateJobService(req.user.id, req.params.id, req.body);
     if (!updated) throw new ApiError(404, "Job not found");
+
+    processJob(updated.id, {
+      role: req.body.role,
+      description: req.body.description,
+      experience: req.body.experience_required,
+      skills: req.body.skills || req.body.skill_ids,
+      industry: req.body.industry
+    }).catch((err) => console.error("Background job processing error:", err));
+
     res.status(200).json(new ApiResponse(200, updated, "Job updated"));
   } catch (err) {
     next(new ApiError(400, err.message || "Failed to update job"));
