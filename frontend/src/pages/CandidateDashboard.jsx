@@ -296,7 +296,6 @@ const CandidateDashboard = () => {
         <header className="dashboard-top panel-card">
           <div>
             <h2>Candidate Panel</h2>
-            <p className="muted">Welcome {user?.email}</p>
           </div>
         </header>
 

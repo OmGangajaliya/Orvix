@@ -81,13 +81,6 @@ const CandidateOnboarding = () => {
                         <h2>Complete Your Profile</h2>
                     </div>
                     <div className="bottom">
-                        <div className="onboarding-welcome">
-                            <p className="welcome-text">Welcome, <strong>{user?.name}</strong>!</p>
-                            <p className="welcome-subtext">
-                                Let's complete your profile so you can start applying to jobs
-                            </p>
-                        </div>
-
                         <form onSubmit={handleSubmit} className="form-grid">
                             <div className="input-group">
                                 <label htmlFor="phone">Phone Number</label>
