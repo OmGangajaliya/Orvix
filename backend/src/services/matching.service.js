@@ -1,4 +1,5 @@
 import { pool } from "../db/connectDB.js";
+import { calculateMatchScores, upsertMatchScore } from "./score.service.js";
 
 const getCompanyByUserId = async (userId) => {
   const { rows } = await pool.query(
@@ -40,6 +41,13 @@ const upsertMatchScoreService = async ({
       industry_score, experience_score, final_score
     )
     VALUES ($1, $2, $3, $4, $5, $6, $7)
+    ON CONFLICT (candidate_id, job_id)
+    DO UPDATE SET
+      semantic_score = EXCLUDED.semantic_score,
+      skill_score = EXCLUDED.skill_score,
+      industry_score = EXCLUDED.industry_score,
+      experience_score = EXCLUDED.experience_score,
+      final_score = EXCLUDED.final_score
     RETURNING *
     `,
     [
@@ -63,6 +71,30 @@ const listMatchScoresForJobService = async (companyUserId, jobId) => {
   const ownsJob = await verifyCompanyOwnsJob(company.id, jobId);
   if (!ownsJob) throw new Error("Job not found or access denied");
 
+  // Get all applications for this job
+  const { rows: applications } = await pool.query(
+    `
+    SELECT a.candidate_id
+    FROM applications a
+    JOIN jobs j ON j.id = a.job_id
+    WHERE a.job_id = $1 AND j.company_id = $2
+    `,
+    [jobId, company.id]
+  );
+
+  // Calculate scores for each candidate if not already calculated
+  for (const app of applications) {
+    try {
+      const scores = await calculateMatchScores(app.candidate_id, jobId);
+      if (scores.final_score !== null) {
+        await upsertMatchScore(app.candidate_id, jobId, scores);
+      }
+    } catch (err) {
+      console.warn(`Score calculation for candidate ${app.candidate_id} failed:`, err.message);
+      // Continue with other candidates
+    }
+  }
+
   const { rows } = await pool.query(
     `
     SELECT
@@ -84,6 +116,29 @@ const listMatchScoresForJobService = async (companyUserId, jobId) => {
 const listMyMatchScoresService = async (candidateUserId) => {
   const candidate = await getCandidateByUserId(candidateUserId);
   if (!candidate) throw new Error("Candidate profile not found");
+
+  // Get all applications for this candidate
+  const { rows: applications } = await pool.query(
+    `
+    SELECT a.job_id
+    FROM applications a
+    WHERE a.candidate_id = $1
+    `,
+    [candidate.id]
+  );
+
+  // Calculate scores for each application if not already calculated
+  for (const app of applications) {
+    try {
+      const scores = await calculateMatchScores(candidate.id, app.job_id);
+      if (scores.final_score !== null) {
+        await upsertMatchScore(candidate.id, app.job_id, scores);
+      }
+    } catch (err) {
+      console.warn(`Score calculation for job ${app.job_id} failed:`, err.message);
+      // Continue with other jobs
+    }
+  }
 
   const { rows } = await pool.query(
     `

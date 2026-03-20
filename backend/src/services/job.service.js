@@ -1,10 +1,35 @@
 import { pool } from "../db/connectDB.js";
 
-const getCompanyByUserId = async (userId) => {
-  const { rows } = await pool.query(
-    `SELECT id FROM companies WHERE user_id = $1`,
+const getCompanyByUserId = async (userId, client = pool) => {
+  const { rows } = await client.query(
+    `
+    SELECT id, user_id, company_name
+    FROM companies
+    WHERE user_id = $1
+    ORDER BY id DESC
+    LIMIT 1
+    `,
     [userId]
   );
+  return rows[0] || null;
+};
+
+const ensureCompanyByUserId = async (userId, client) => {
+  const existing = await getCompanyByUserId(userId, client);
+  if (existing) return existing;
+
+  const { rows } = await client.query(
+    `
+    INSERT INTO companies (user_id, company_name)
+    VALUES (
+      $1,
+      COALESCE((SELECT NULLIF(name, '') FROM users WHERE id = $1), 'Company')
+    )
+    RETURNING id, user_id, company_name
+    `,
+    [userId]
+  );
+
   return rows[0];
 };
 
@@ -38,10 +63,7 @@ const createJobService = async (companyUserId, payload) => {
   try {
     await client.query("BEGIN");
 
-    const company = await getCompanyByUserId(companyUserId);
-    if (!company) {
-      throw new Error("Company profile not found for this user");
-    }
+    const company = await ensureCompanyByUserId(companyUserId, client);
 
     const {
       role_id,
@@ -186,7 +208,7 @@ const updateJobService = async (companyUserId, jobId, payload) => {
   try {
     await client.query("BEGIN");
 
-    const company = await getCompanyByUserId(companyUserId);
+    const company = await ensureCompanyByUserId(companyUserId, client);
     if (!company) {
       throw new Error("Company profile not found for this user");
     }

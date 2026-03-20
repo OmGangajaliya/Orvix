@@ -1,4 +1,5 @@
 import { pool } from "../db/connectDB.js";
+import { calculateMatchScores, upsertMatchScore } from "./score.service.js";
 
 const getCandidateByUserId = async (userId) => {
   const { rows } = await pool.query(
@@ -32,6 +33,17 @@ const applyToJobService = async (candidateUserId, jobId) => {
     `,
     [candidate.id, jobId]
   );
+
+  // Calculate and store match scores asynchronously
+  try {
+    const scores = await calculateMatchScores(candidate.id, jobId);
+    if (scores.final_score !== null) {
+      await upsertMatchScore(candidate.id, jobId, scores);
+    }
+  } catch (err) {
+    console.warn("Match score calculation error (non-blocking):", err.message);
+    // Non-blocking - application is created regardless of score calculation
+  }
 
   return rows[0];
 };
@@ -76,14 +88,44 @@ const listApplicationsForJobService = async (companyUserId, jobId) => {
       c.phone,
       c.location,
       c.profile_summary,
-      c.total_experience_years,
-      c.resume_url
+      COALESCE(
+        NULLIF(c.total_experience_years, 0),
+        NULLIF((ra.parsed_json->>'experience_years')::INT, 0),
+        NULLIF(ROUND(exp_hist.years)::INT, 0),
+        0
+      ) AS total_experience_years,
+      c.resume_url,
+      COALESCE(ms.final_score, 0) AS final_score
     FROM applications a
     JOIN candidates c ON c.id = a.candidate_id
     JOIN users u ON u.id = c.user_id
     JOIN jobs j ON j.id = a.job_id
+    LEFT JOIN LATERAL (
+      SELECT parsed_json
+      FROM resume_analysis ra
+      WHERE ra.candidate_id = c.id
+      ORDER BY ra.created_at DESC
+      LIMIT 1
+    ) ra ON TRUE
+    LEFT JOIN LATERAL (
+      SELECT
+        COALESCE(
+          SUM(
+            GREATEST(
+              0,
+              DATE_PART('year', AGE(COALESCE(cwh.end_date, CURRENT_DATE), cwh.start_date)) * 12 +
+              DATE_PART('month', AGE(COALESCE(cwh.end_date, CURRENT_DATE), cwh.start_date))
+            )
+          ) / 12.0,
+          0
+        ) AS years
+      FROM candidate_work_history cwh
+      WHERE cwh.candidate_id = c.id
+        AND cwh.start_date IS NOT NULL
+    ) exp_hist ON TRUE
+    LEFT JOIN match_scores ms ON ms.candidate_id = c.id AND ms.job_id = j.id
     WHERE a.job_id = $1 AND j.company_id = $2
-    ORDER BY a.applied_at DESC
+    ORDER BY ms.final_score DESC NULLS LAST, a.applied_at DESC
     `,
     [jobId, company.id]
   );

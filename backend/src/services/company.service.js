@@ -12,7 +12,42 @@ const createCompany = async ({
   try {
     await client.query("BEGIN");
 
-    // 🔹 Insert company
+    const existing = await client.query(
+      `
+      SELECT id
+      FROM companies
+      WHERE user_id = $1
+      ORDER BY id DESC
+      LIMIT 1
+      `,
+      [user_id]
+    );
+
+    if (existing.rows.length > 0) {
+      const { rows } = await client.query(
+        `
+        UPDATE companies
+        SET
+          company_name = COALESCE($2, company_name),
+          website = COALESCE($3, website),
+          location = COALESCE($4, location),
+          description = COALESCE($5, description)
+        WHERE id = $1
+        RETURNING *
+        `,
+        [
+          existing.rows[0].id,
+          company_name,
+          website,
+          location,
+          description
+        ]
+      );
+
+      await client.query("COMMIT");
+      return rows[0];
+    }
+
     const companyQuery = `
       INSERT INTO companies
       (user_id, company_name, website, location, description)

@@ -198,7 +198,7 @@ const createTables = async () => {
       CREATE TABLE IF NOT EXISTS job_embeddings (
         id BIGSERIAL PRIMARY KEY,
         job_id BIGINT REFERENCES jobs(id),
-        embedding VECTOR(1536),
+        embedding VECTOR(768),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         UNIQUE(job_id)
       );
@@ -215,7 +215,8 @@ const createTables = async () => {
         industry_score FLOAT,
         experience_score FLOAT,
         final_score FLOAT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(candidate_id, job_id) 
       );
     `);
 
