@@ -88,6 +88,44 @@ Orvix/
 - Candidate/job embedding persistence in PostgreSQL (pgvector)
 - Match scoring APIs
 
+## Weightage and Scoring
+
+Match scoring is implemented in `backend/src/services/score.service.js`.
+
+### Component Scores (0-100)
+- Semantic score:
+  - Cosine similarity between candidate and job embeddings.
+  - Normalized to 0-100 using `(similarity + 1) / 2 * 100`.
+- Skill score:
+  - Percentage of required job skills matched by candidate skills.
+  - Includes table-based skills and parsed resume/job analysis fallback.
+- Experience score:
+  - `100` if candidate experience >= required experience.
+  - Proportional score when lower.
+  - Neutral defaults for missing values.
+- Industry score:
+  - `100` for clear match.
+  - `60` for partial text overlap.
+  - `50` neutral when job/candidate industry data is missing.
+  - `0` for mismatch.
+
+### Final Score Weightage
+
+Final score is a weighted average:
+
+```text
+final_score =
+  semantic_score   * 0.40 +
+  skill_score      * 0.30 +
+  experience_score * 0.20 +
+  industry_score   * 0.10
+```
+
+### Null/Default Handling
+- If `semantic_score` is missing, it is treated as `0`.
+- If `skill_score`, `experience_score`, or `industry_score` are missing, each defaults to `50` (neutral).
+- Final score is rounded to the nearest integer before storing.
+
 ## Architecture Overview
 
 ### Frontend Flow
