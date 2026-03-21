@@ -20,8 +20,8 @@ export const AlertProvider = ({ children }) => {
         )
 
         gsap.fromTo(alertBox,
-            { boxShadow: "0 0 0px rgba(190,130,255,0)" },
-            { boxShadow: "0 0 15px rgba(84, 131, 89, 0.83)", duration: 1, ease: "sine.inOut", yoyo: true, repeat: 3 }
+            { boxShadow: "0 0 0px rgba(59, 130, 246, 0)" },
+            { boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)", duration: 1, ease: "sine.inOut", yoyo: true, repeat: 3 }
         )
 
         alertBox.style.display = 'block'

@@ -9,7 +9,7 @@ const ProtectedRoute = ({ role, children }) => {
   }
 
   if (role && user?.role !== role) {
-    const redirectPath = user?.role === "company" ? "/company/dashboard" : "/candidate/dashboard";
+    const redirectPath = user?.role === "company" ? "/company/dashboard/jobs" : "/candidate/dashboard/jobs";
     return <Navigate to={redirectPath} replace />;
   }
 

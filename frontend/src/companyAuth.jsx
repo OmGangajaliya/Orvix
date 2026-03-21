@@ -26,7 +26,10 @@ const CompanyAuth = () => {
                 errorMsg("This account belongs to candidate panel");
                 return;
             }
-            navigate("/company/dashboard");
+
+            const username = user?.name || loginEmail.split("@")[0] || "User";
+            successMsg(`Welcome ${username}`);
+            navigate("/company/dashboard/jobs");
         } catch (error) {
             errorMsg(error?.response?.data?.message || "Invalid credentials");
         }

@@ -23,7 +23,6 @@ Orvix is a full-stack recruitment platform with role-based experiences for candi
 - pgvector extension for embeddings
 - JWT auth (access + refresh tokens)
 - Multer (file upload)
-- Cloudinary (file storage)
 - Google Generative AI SDK (Gemini)
 
 ## Project Structure

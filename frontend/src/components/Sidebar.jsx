@@ -14,6 +14,7 @@ import {
     faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../context/AuthContext";
+import { useAlert } from "../context/AlertContext";
 import logo from "../assets/orvix-white-logo.png";
 import "../style/sidebar.css";
 
@@ -22,28 +23,27 @@ const Sidebar = ({ userRole }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const { logout, user } = useAuth();
+    const { successMsg } = useAlert();
 
     const candidateMenuItems = [
-        { label: "Dashboard", path: "/candidate/dashboard", icon: faGaugeHigh },
-        { label: "Browse Jobs", path: "/candidate/dashboard?tab=jobs", icon: faBriefcase },
-        { label: "My Applications", path: "/candidate/dashboard?tab=applications", icon: faFileLines },
-        { label: "Matches", path: "/candidate/dashboard?tab=matches", icon: faStar },
-        { label: "Profile", path: "/candidate/dashboard?tab=profile", icon: faUser }
+        { label: "Browse Jobs", path: "/candidate/dashboard/jobs", icon: faBriefcase },
+        { label: "My Applications", path: "/candidate/dashboard/applications", icon: faFileLines },
+        { label: "Matches", path: "/candidate/dashboard/matches", icon: faStar },
+        { label: "Profile", path: "/candidate/dashboard/profile", icon: faUser }
     ];
 
     const companyMenuItems = [
-        { label: "Dashboard", path: "/company/dashboard", icon: faGaugeHigh },
-        { label: "My Jobs", path: "/company/dashboard?tab=jobs", icon: faBriefcase },
-        { label: "Post New Job", path: "/company/dashboard?tab=create", icon: faPlus },
-        { label: "Applicants", path: "/company/dashboard?tab=applicants", icon: faUsers },
-        { label: "Analytics", path: "/company/dashboard?tab=analytics", icon: faChartSimple },
-        { label: "Profile", path: "/company/dashboard?tab=profile", icon: faBuilding }
+        { label: "My Jobs", path: "/company/dashboard/jobs", icon: faBriefcase },
+        { label: "Post New Job", path: "/company/dashboard/create", icon: faPlus },
+        { label: "Applicants", path: "/company/dashboard/applicants", icon: faUsers },
+        { label: "Profile", path: "/company/dashboard/profile", icon: faBuilding }
     ];
 
     const menuItems = userRole === "candidate" ? candidateMenuItems : companyMenuItems;
 
     const handleLogout = async () => {
         await logout();
+        successMsg("Logged out successfully");
         navigate("/");
     };
 

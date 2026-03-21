@@ -227,6 +227,7 @@
 
 .input-group input[type="file"] {
     padding: 0.8rem !important;
+    min-height: fit-content;
     cursor: pointer;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(189, 231, 255, 0.4)) !important;
 }

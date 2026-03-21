@@ -61,7 +61,7 @@ const CandidateOnboarding = () => {
             
             // Small delay so user sees success message
             setTimeout(() => {
-                navigate("/candidate/dashboard");
+                navigate("/candidate/dashboard/jobs");
             }, 800);
         } catch (error) {
             errorMsg(
@@ -137,7 +137,7 @@ const CandidateOnboarding = () => {
                             You can skip this for now and{" "}
                             <button
                                 type="button"
-                                onClick={() => navigate("/candidate/dashboard")}
+                                onClick={() => navigate("/candidate/dashboard/jobs")}
                                 style={{
                                     background: "none",
                                     border: "none",

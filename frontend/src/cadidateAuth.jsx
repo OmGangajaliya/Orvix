@@ -32,7 +32,10 @@ const CadidateAuth = () => {
                 return;
             }
 
-            navigate("/candidate/dashboard");
+            const username = user?.name || loginEmail.split("@")[0] || "User";
+            successMsg(`Welcome ${username}`);
+
+            navigate("/candidate/dashboard/jobs");
         } catch (error) {
             errorMsg(error?.response?.data?.message || "Invalid credentials");
         }
