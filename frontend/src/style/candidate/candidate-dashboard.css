@@ -1,0 +1,410 @@
+/* ============================================
+   CANDIDATE DASHBOARD STYLES
+   Styles specific to candidate panel and sections
+   ============================================ */
+
+/* Browse Jobs Section */
+.cand-browse-jobs-panel {
+  width: fit-content;
+  border: 2px solid rgba(121, 190, 240, 0.68);
+  border-radius: 18px;
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, rgba(212, 239, 255, 0.22), rgba(141, 204, 243, 0.16));
+}
+
+.cand-browse-jobs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cand-browse-jobs-header h3 {
+  color: #1f67bd;
+  font-size: 1.35rem;
+}
+
+.cand-browse-jobs-filters {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.cand-browse-jobs-filter-input {
+  border: 1px solid rgba(112, 185, 236, 0.52);
+  border-radius: 10px;
+  padding: 0.62rem 0.7rem;
+  color: #1f5f9c;
+  background: rgba(247, 253, 255, 0.84);
+  font-size: 0.9rem;
+}
+
+.cand-browse-jobs-filter-btn {
+  border-radius: 11px;
+  border: 1px solid rgba(78, 160, 219, 0.7);
+  padding: 0.56rem 0.92rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(180deg, #2990f2, #0d62ca);
+  color: #fff;
+}
+
+.cand-browse-jobs-filter-btn:hover {
+  opacity: 0.9;
+}
+
+.cand-browse-jobs-jobs-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.cand-job-card {
+  border: 1px solid rgba(124, 192, 240, 0.56);
+  border-radius: 14px;
+  padding: 0.9rem;
+  background: rgba(235, 247, 255, 0.62);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.7rem;
+  width: 300px;
+}
+
+.cand-job-card-title {
+  color: #145dac;
+  margin-bottom: 0.18rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.cand-job-card-company {
+  color: #2d6ea9;
+  font-size: 0.9rem;
+}
+
+.cand-job-card-description {
+  color: #2d6ea9;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.cand-job-card-skills-row {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.cand-job-skill-chip {
+  font-size: 0.75rem;
+  background: rgba(12, 95, 179, 0.12);
+  color: #0d5eaf;
+  border-radius: 100px;
+  padding: 0.26rem 0.48rem;
+}
+
+.cand-job-apply-btn {
+  border-radius: 11px;
+  border: 1px solid rgba(78, 160, 219, 0.7);
+  padding: 0.56rem 0.92rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(180deg, #2990f2, #0d62ca);
+  color: #fff;
+  width: 100%;
+  transition: opacity 0.2s ease;
+}
+
+.cand-job-apply-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.cand-job-apply-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cand-browse-jobs-empty {
+  color: rgba(26, 81, 134, 0.82);
+  font-size: 0.9rem;
+}
+
+/* My Applications Section */
+.cand-applications-panel {
+  width: fit-content;
+  border: 2px solid rgba(121, 190, 240, 0.68);
+  border-radius: 18px;
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, rgba(212, 239, 255, 0.22), rgba(141, 204, 243, 0.16));
+}
+
+.cand-applications-header h3 {
+  color: #1f67bd;
+  font-size: 1.35rem;
+  margin-bottom: 1rem;
+}
+
+.cand-applications-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.cand-application-card {
+  border: 1px solid rgba(124, 192, 240, 0.56);
+  border-radius: 14px;
+  padding: 0.9rem;
+  background: rgba(235, 247, 255, 0.62);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.7rem;
+  width: 300px;
+}
+
+.cand-application-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cand-application-job-title {
+  color: #145dac;
+  margin-bottom: 0.18rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.cand-application-company {
+  color: #2d6ea9;
+  font-size: 0.9rem;
+}
+
+.cand-application-status {
+  font-size: 0.82rem;
+  background: rgba(12, 95, 179, 0.14);
+  color: #0a5da6;
+  border-radius: 999px;
+  padding: 0.26rem 0.62rem;
+  text-transform: capitalize;
+}
+
+.cand-applications-empty {
+  color: rgba(26, 81, 134, 0.82);
+  font-size: 0.9rem;
+}
+
+/* Profile Management Section */
+.cand-profile-panel {
+  width: fit-content;
+  border: 2px solid rgba(121, 190, 240, 0.68);
+  border-radius: 18px;
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, rgba(212, 239, 255, 0.22), rgba(141, 204, 243, 0.16));
+}
+
+.cand-profile-header h3 {
+  color: #1f67bd;
+  font-size: 1.35rem;
+  margin-bottom: 1rem;
+}
+
+.cand-profile-display {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.cand-profile-display-item {
+  color: #225f98;
+  font-size: 0.95rem;
+}
+
+.cand-profile-display-label {
+  font-weight: 600;
+  color: #145dac;
+}
+
+.cand-profile-resume-link {
+  color: #0e64b9;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.cand-profile-resume-link:hover {
+  opacity: 0.8;
+}
+
+.cand-profile-onboard-form {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.cand-profile-form-input {
+  border: 1px solid rgba(112, 185, 236, 0.52);
+  border-radius: 10px;
+  padding: 0.62rem 0.7rem;
+  color: #1f5f9c;
+  background: rgba(247, 253, 255, 0.84);
+  font-size: 0.9rem;
+}
+
+.cand-profile-form-input::placeholder {
+  color: rgba(26, 81, 134, 0.6);
+}
+
+.cand-profile-file-input {
+  border: 1px solid rgba(112, 185, 236, 0.52);
+  border-radius: 10px;
+  padding: 0.62rem 0.7rem;
+  color: #1f5f9c;
+  background: rgba(247, 253, 255, 0.84);
+  font-size: 0.9rem;
+}
+
+.cand-profile-submit-btn {
+  border-radius: 11px;
+  border: 1px solid rgba(78, 160, 219, 0.7);
+  padding: 0.56rem 0.92rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(180deg, #2990f2, #0d62ca);
+  color: #fff;
+  width: 100%;
+}
+
+.cand-profile-submit-btn:hover {
+  opacity: 0.9;
+}
+
+.cand-profile-onboard-message {
+  color: rgba(26, 81, 134, 0.82);
+  font-size: 0.9rem;
+}
+
+/* Match Scores Section */
+.cand-matches-panel {
+  width: fit-content;
+  border: 2px solid rgba(121, 190, 240, 0.68);
+  border-radius: 18px;
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, rgba(212, 239, 255, 0.22), rgba(141, 204, 243, 0.16));
+}
+
+.cand-matches-header h3 {
+  color: #1f67bd;
+  font-size: 1.35rem;
+  margin-bottom: 1rem;
+}
+
+.cand-matches-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.cand-match-card {
+  border: 1px solid rgba(124, 192, 240, 0.56);
+  border-radius: 14px;
+  padding: 0.9rem;
+  background: rgba(235, 247, 255, 0.62);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.7rem;
+  width: 300px;
+}
+
+.cand-match-job-title {
+  color: #145dac;
+  margin-bottom: 0.18rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.cand-match-company-name {
+  color: #2d6ea9;
+  font-size: 0.9rem;
+}
+
+.cand-match-score-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.cand-match-score-label {
+  color: #145dac;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.cand-match-score-value {
+  color: #0d62ca;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.cand-matches-empty {
+  color: rgba(26, 81, 134, 0.82);
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cand-browse-jobs-panel,
+  .cand-applications-panel,
+  .cand-profile-panel,
+  .cand-matches-panel {
+    width: 100%;
+  }
+
+  .cand-job-card,
+  .cand-application-card,
+  .cand-match-card {
+    width: 100%;
+  }
+
+  .cand-browse-jobs-header,
+  .cand-application-info {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cand-browse-jobs-filters,
+  .cand-profile-onboard-form {
+    grid-template-columns: 1fr;
+  }
+
+  .cand-profile-submit-btn {
+    width: 100%;
+  }
+}

@@ -95,7 +95,10 @@
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
+  width: 48%;
 }
+
+
 
 .tab-btn {
   background: rgba(243, 251, 255, 0.6);
@@ -115,8 +118,9 @@
 }
 
 .list-stack {
-  margin-top: 0.9rem;
-  display: grid;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 0.8rem;
 }
 
@@ -129,6 +133,19 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 0.7rem;
+}
+
+.candidate-dashboard-layout .list-card {
+  border: 1px solid rgba(124, 192, 240, 0.56);
+  border-radius: 14px;
+  padding: 0.9rem;
+  background: rgba(235, 247, 255, 0.62);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.7rem;
+  width: 300px;
 }
 
 .list-card h4 {
@@ -178,6 +195,10 @@
   display: grid;
   gap: 0.7rem;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.filter-grid{
+  margin-top: 0.1rem;
 }
 
 .minimal-filter-grid {
@@ -264,8 +285,10 @@
 .job-card-actions {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.45rem;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .job-modal-overlay {

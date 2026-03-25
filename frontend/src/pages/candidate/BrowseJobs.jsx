@@ -114,13 +114,12 @@ const BrowseJobs = () => {
   };
 
   return (
-    <div className="dashboard-layout">
+    <div className="dashboard-layout candidate-dashboard-layout">
       <Sidebar userRole="candidate" />
       <main className="dashboard-shell" ref={rootRef}>
         <header className="dashboard-top panel-card">
           <div>
             <h2>Browse Jobs</h2>
-            <p className="muted">Find a role fast and open full details when needed.</p>
           </div>
         </header>
 
@@ -128,7 +127,7 @@ const BrowseJobs = () => {
           <div className="filter-grid minimal-filter-grid">
             <input
               type="text"
-              placeholder="Search title, company, location, skills"
+              placeholder="Search Position"
               value={searchText}
               onChange={(event) => setSearchText(event.target.value)}
             />
@@ -167,40 +166,38 @@ const BrowseJobs = () => {
           </div>
 
           {loading ? <p className="muted">Loading jobs...</p> : null}
-
-          <div className="list-stack">
-            {visibleJobs.map((job) => (
-              <article className="list-card job-card-compact" key={job.id}>
-                <div className="job-card-main">
-                  <h4>{job.title}</h4>
-                  <p className="job-card-subtitle">{job.company_name || "Unknown company"}</p>
-                  <p className="job-card-subtitle">{job.location || "Remote / Flexible"}</p>
-                </div>
-
-                <div className="job-card-actions">
-                  <button
-                    type="button"
-                    className="ghost-btn"
-                    onClick={() => setSelectedJob(job)}
-                  >
-                    View Job
-                  </button>
-
-                  <button
-                    type="button"
-                    className="primary-btn"
-                    disabled={appliedJobIds.has(job.id)}
-                    onClick={() => applyToJob(job.id)}
-                  >
-                    {appliedJobIds.has(job.id) ? "Applied" : "Apply"}
-                  </button>
-                </div>
-              </article>
-            ))}
-            {!visibleJobs.length ? <p className="muted">No jobs available.</p> : null}
-          </div>
         </section>
+        <div className="list-stack">
+          {visibleJobs.map((job) => (
+            <article className="list-card job-card-compact" key={job.id}>
+              <div className="job-card-main">
+                <h4>{job.title}</h4>
+                <p className="job-card-subtitle">{job.company_name || "Unknown company"}</p>
+                <p className="job-card-subtitle">{job.location || "Remote / Flexible"}</p>
+              </div>
 
+              <div className="job-card-actions">
+                <button
+                  type="button"
+                  className="ghost-btn"
+                  onClick={() => setSelectedJob(job)}
+                >
+                  View Job
+                </button>
+
+                <button
+                  type="button"
+                  className="primary-btn"
+                  disabled={appliedJobIds.has(job.id)}
+                  onClick={() => applyToJob(job.id)}
+                >
+                  {appliedJobIds.has(job.id) ? "Applied" : "Apply"}
+                </button>
+              </div>
+            </article>
+          ))}
+          {!visibleJobs.length ? <p className="muted">No jobs available.</p> : null}
+        </div>
         {selectedJob ? (
           <div className="job-modal-overlay" onClick={() => setSelectedJob(null)}>
             <section className="job-modal" onClick={(event) => event.stopPropagation()}>
@@ -232,8 +229,8 @@ const BrowseJobs = () => {
                 <p className="chip-row">
                   {(selectedJob.skills || []).length
                     ? selectedJob.skills.map((skill) => (
-                        <span key={skill} className="chip">{skill}</span>
-                      ))
+                      <span key={skill} className="chip">{skill}</span>
+                    ))
                     : "No skills listed."}
                 </p>
               </div>
