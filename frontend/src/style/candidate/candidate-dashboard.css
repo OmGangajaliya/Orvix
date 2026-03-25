@@ -3,43 +3,63 @@
    Styles specific to candidate panel and sections
    ============================================ */
 
+/* Animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Browse Jobs Section */
 .cand-browse-jobs-panel {
-  width: fit-content;
+  width: 100%;
   border: 2px solid rgba(121, 190, 240, 0.68);
   border-radius: 18px;
-  padding: 1rem;
+  padding: 1.5rem;
   backdrop-filter: blur(8px);
   background: linear-gradient(180deg, rgba(212, 239, 255, 0.22), rgba(141, 204, 243, 0.16));
 }
 
-.cand-browse-jobs-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+.cand-browse-jobs-filter-header {
   margin-bottom: 1rem;
 }
 
-.cand-browse-jobs-header h3 {
-  color: #1f67bd;
-  font-size: 1.35rem;
+.cand-browse-jobs-filter-header h3 {
+  color: #0d62ca;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
 }
 
 .cand-browse-jobs-filters {
-  margin-top: 0.8rem;
   display: grid;
-  gap: 0.7rem;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.filter-input-wrapper {
+  position: relative;
+  width: 100%;
 }
 
 .cand-browse-jobs-filter-input {
   border: 1px solid rgba(112, 185, 236, 0.52);
   border-radius: 10px;
-  padding: 0.62rem 0.7rem;
+  padding: 0.75rem 1rem;
   color: #1f5f9c;
   background: rgba(247, 253, 255, 0.84);
   font-size: 0.9rem;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.cand-browse-jobs-filter-input:focus {
+  outline: none;
+  border-color: #0d62ca;
+  box-shadow: 0 0 0 3px rgba(13, 98, 202, 0.1);
 }
 
 .cand-browse-jobs-filter-btn {
@@ -58,25 +78,30 @@
 }
 
 .cand-browse-jobs-jobs-container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  width: 100%;
 }
 
 .cand-job-card {
   border: 1px solid rgba(124, 192, 240, 0.56);
   border-radius: 14px;
-  padding: 0.9rem;
+  padding: 1.5rem;
   background: rgba(235, 247, 255, 0.62);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.7rem;
-  width: 300px;
+  align-items: stretch;
+  gap: 1.2rem;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.cand-job-card:hover {
+  border-color: rgba(13, 98, 202, 0.4);
+  box-shadow: 0 8px 16px rgba(13, 98, 202, 0.15);
+  transform: translateY(-2px);
 }
 
 .cand-job-card-title {
@@ -116,13 +141,14 @@
 .cand-job-apply-btn {
   border-radius: 11px;
   border: 1px solid rgba(78, 160, 219, 0.7);
-  padding: 0.56rem 0.92rem;
+  padding: 0.7rem 1.2rem;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   background: linear-gradient(180deg, #2990f2, #0d62ca);
   color: #fff;
-  width: 100%;
+  flex: 1;
+  min-width: 120px;
   transition: opacity 0.2s ease;
 }
 
@@ -133,6 +159,16 @@
 .cand-job-apply-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.cand-job-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 .cand-browse-jobs-empty {
@@ -162,6 +198,17 @@
   align-items: flex-start;
   gap: 0.8rem;
   flex-wrap: wrap;
+}
+
+.model-close-btn {
+  border-radius: 11px;
+  border: 1px solid rgba(78, 160, 219, 0.7);
+  padding: 0.56rem 0.92rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(180deg, #2990f2, #0d62ca);
+  color: #fff;
 }
 
 .cand-application-card {
@@ -376,6 +423,149 @@
 .cand-matches-empty {
   color: rgba(26, 81, 134, 0.82);
   font-size: 0.9rem;
+}
+
+/* Job Modal */
+.cand-job-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: #00000020;
+  backdrop-filter: blur(5px);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 9999;
+}
+
+.cand-job-modal {
+  width: min(900px, 95vw);
+  max-height: 90dvh;
+  overflow-y: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(122, 190, 237, 0.62);
+  background: linear-gradient(180deg, rgba(243, 252, 255, 0.98), rgba(220, 240, 255, 0.95));
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.cand-job-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(13, 98, 202, 0.15);
+}
+
+.cand-job-modal-header h3 {
+  color: #145daa;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cand-job-modal-close-btn {
+  border-radius: 11px;
+  border: 1px solid rgba(78, 160, 219, 0.7);
+  padding: 0.56rem 0.92rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(180deg, #2990f2, #0d62ca);
+  color: #fff;
+  transition: opacity 0.2s ease;
+}
+
+.cand-job-modal-close-btn:hover {
+  opacity: 0.9;
+}
+
+.cand-job-modal-grid {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(220, 245, 255, 0.3);
+  border-radius: 12px;
+}
+
+.cand-job-modal-grid p {
+  color: #245f97;
+  font-size: 0.92rem;
+}
+
+.cand-job-modal-body {
+  margin-top: 0;
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.cand-job-modal-body h4 {
+  color: #1663b4;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.cand-job-modal-body p {
+  color: #245f97;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.cand-job-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(13, 98, 202, 0.15);
+}
+
+.cand-job-modal-apply-btn {
+  border-radius: 11px;
+  border: 1px solid rgba(78, 160, 219, 0.7);
+  padding: 0.8rem 1.8rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(180deg, #2990f2, #0d62ca);
+  color: #fff;
+  transition: all 0.2s ease;
+  min-width: 160px;
+}
+
+.cand-job-modal-apply-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 98, 202, 0.3);
+}
+
+.cand-job-modal-apply-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cand-job-view-details-btn {
+  border-radius: 11px;
+  border: 1px solid rgba(112, 185, 236, 0.52);
+  padding: 0.7rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(243, 251, 255, 0.6);
+  color: #175fae;
+  flex: 1;
+  min-width: 120px;
+  transition: all 0.2s ease;
+}
+
+.cand-job-view-details-btn:hover {
+  background: rgba(209, 237, 255, 0.8);
+  border-color: #0d62ca;
 }
 
 /* Responsive Design */

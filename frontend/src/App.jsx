@@ -11,6 +11,7 @@ import MyJobs from "./pages/company/MyJobs";
 import PostJob from "./pages/company/PostJob";
 import Applicants from "./pages/company/Applicants";
 import CompanyProfile from "./pages/company/Profile";
+import CandidateDashboard from "./pages/CandidateDashboard";
 
 const App = () => {
   return (
